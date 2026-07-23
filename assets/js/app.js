@@ -5,6 +5,9 @@ import { initEmiCalculator } from './modules/emi/emi.js';
 import { initSubmeterCalculator } from './modules/submeter/submeter.js';
 
 const tabs = [
+    const tabs = [
+    { id: 'dashboard', name: 'Module Selector', desc: 'Select a tool to begin', icon: 'layout-grid', init: () => {} },
+    { id: 'unit', name: 'Unit Converter', desc: 'Convert lengths, weights, and dimensions', icon: 'scale', init: initUnitConverter },
     { id: 'unit', name: 'Unit Converter', desc: 'Convert lengths, weights, and dimensions', icon: 'scale', init: initUnitConverter },
     { id: 'cbm', name: 'Volume & CBM', desc: 'Calculate shipping volume & cargo weight', icon: 'box', init: initCbmCalculator },
     { id: 'currency', name: 'Currency Exchange', desc: 'Live exchange conversion with swap toggle', icon: 'coins', init: initCurrencyCalculator },
@@ -22,7 +25,7 @@ function initApp() {
         if (typeof tab.init === 'function') tab.init();
     });
 
-    switchTab('unit');
+    switchTab('dashboard');
     lucide.createIcons();
     initThemeSwitcher();
 }
