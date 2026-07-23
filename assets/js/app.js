@@ -1,5 +1,4 @@
 import { initUnitConverter } from './modules/unit/unit.js';
-import { initCbmCalculator } from './modules/cbm/cbm.js';
 import { initCurrencyCalculator } from './modules/currency/currency.js';
 import { initEmiCalculator } from './modules/emi/emi.js';
 import { initSubmeterCalculator } from './modules/submeter/submeter.js';
