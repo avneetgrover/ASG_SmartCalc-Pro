@@ -52,29 +52,45 @@ function populateNavigation() {
     mobileSelect.addEventListener('change', (e) => switchTab(e.target.value));
 }
 
-function switchTab(tabId) {
+window.switchTab = function(tabId) {
+    // Hide all panels
     document.querySelectorAll('.calc-panel').forEach(p => p.classList.add('hidden'));
-    
-    const targetPanel = document.getElementById(`panel-${tabId}`);
-    if (targetPanel) targetPanel.classList.remove('hidden');
 
+    // Show selected panel
+    const targetPanel = document.getElementById(`panel-${tabId}`);
+    if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+    }
+
+    // Update active state on sidebar buttons
     tabs.forEach(t => {
         const btn = document.getElementById(`nav-${t.id}`);
-        if (!btn) return;
-        if (t.id === tabId) {
-            btn.className = `w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-bold transition-all duration-200 text-left bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-500/20`;
-        } else {
-            btn.className = `w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-bold transition-all duration-200 text-left text-slate-600 hover:bg-slate-200/60 hover:text-slate-900`;
+        if (btn) {
+            if (t.id === tabId) {
+                btn.className = 'w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-bold transition-all duration-200 text-left bg-purple-600 text-white shadow-lg shadow-purple-600/30';
+            } else {
+                btn.className = 'w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-bold transition-all duration-200 text-left text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60';
+            }
         }
     });
 
-    const active = tabs.find(t => t.id === tabId);
-    if (active) {
-        document.getElementById('currentTabTitle').textContent = active.name;
-        document.getElementById('currentTabDesc').textContent = active.desc;
-        document.getElementById('mobileTabSelect').value = tabId;
+    // Update mobile dropdown value if it exists
+    const mobileSelect = document.getElementById('mobileTabSelect');
+    if (mobileSelect) mobileSelect.value = tabId;
+
+    // Update main header titles and run module initialization
+    const tabData = tabs.find(t => t.id === tabId);
+    if (tabData) {
+        const titleEl = document.getElementById('currentTabTitle');
+        const descEl = document.getElementById('currentTabDesc');
+        if (titleEl) titleEl.textContent = tabData.name;
+        if (descEl) descEl.textContent = tabData.desc;
+
+        if (typeof tabData.init === 'function') {
+            tabData.init();
+        }
     }
-}
+};
 function initThemeSwitcher() {
     const themeKey = 'asg_theme';
     const selects = [
