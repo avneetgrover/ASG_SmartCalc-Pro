@@ -1,1 +1,1 @@
-# ASG_SmartCalc-Pro
+# asg_smartcalc-pro
